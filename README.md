@@ -1,6 +1,6 @@
 # fhiraas-microservice-kubernetes
 
-A Quick way to invite the InterSystems FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://nginx.org/en/) proxy ninja maneuvers to get the job done.
+A Quick way to invite the InterSystems FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://nginx.org/en/) proxy ninja moves to get the job done.
 
 ## Prerequisites
 
@@ -10,7 +10,7 @@ You'll need a couple of things if you want to deploy this in the manner it was p
 > 
 > For this demonstration we are parked directly onto a Kubernetes Master Node tainted to put in work.
 
-IMG(PARKED SHELL)
+![Environment](assets/shell_env.png?raw=true "Environment")
 
 ## FHIR up the FHIR Accelerator Service
 
@@ -29,7 +29,7 @@ For the "Rest of the README", park yourself on a Tainted Kubernetes Master Node.
 git clone https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes.git
 cd fhir-microservice-kubernetes
 ```
-
+![Clone Repo](assets/repo_clone.png?raw=true "Ron")
 ## Deploy to Kubernetes Cluster
 
 - [ ] [Create a Namespace](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L1-6), this gives us a blast radius to play in for now.
@@ -46,13 +46,21 @@ cd fhir-microservice-kubernetes
 cd fhir-microservice-kubernetes # should already be here, but just to be sure.
 kubectl apply -f k8s/
 ```
+![Deploy](assets/k8s_deploy.png?raw=true "Ron")
+![Deploy](assets/fhiraas_deployment.gif?raw=true "Ron")
 
-## Throw some FHIR at it!
-Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects in the event your laptop takes off.
+## Test It!
 
-```
-bash bin/fhirbench.sh
-```
+Lets do a quick test and see if FHIR is successfully getting served up through the NodePort.
+
+ - [✔] Node Port Socket Listening?
+ - [✔] Conformance Statement Responding?
+ - [✔] Query Patients?
+ - [✔] Get Patient? 
+
+![Test](assets/fhiraas_nodeport.gif?raw=true "Ron")
+
+
 ## Scale It!
 
 We're on a single node and exposing the service to a node port so not sure this will increase our throughput, but go nuts and scale away anyway.  
@@ -60,20 +68,22 @@ We're on a single node and exposing the service to a node port so not sure this 
 ```
 kubectl scale deployments/isc-fhiraas-deployment --replicas=30 -n isc-fhiraas
 ```
-IMG(watcher)
-IMG(clownsuit)
-## Throw some more FHIR at it!
-
-Pump up the volume and increase the traffic, let's see if we get better timings for the exact same params, but scaled out.
+![Scale](assets/scale_out.png?raw=true "Ron")
+![Scale](assets/fhiraas_scalout.gif?raw=true "Ron")
+## Throw some FHIR at it!
+Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects in the event your laptop takes off.
 
 ```
 bash bin/fhirbench.sh
 ```
+![Deploy](assets/fhiraas-benchanddescale.png?raw=true "Ron")
 
-## Clown Suit
+> 🏆 Results
+> 
+> 50 puts, and 50 searches in 13 seconds.
 
 # Blame
-This stuff in the repo, Ron Sweeney (ron.sweeney@integrationrequired.com) of [Integration Required]:"https://www.integrationrequired.com".  These are the opinions of my employer.
+This stuff in the repo, Ron Sweeney (ron.sweeney@integrationrequired.com) of [Integration Required](https://www.integrationrequired.com).  These are the opinions of my employer.
 
 
 
