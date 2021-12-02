@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Namespace
 apiVersion: v1
 metadata:
-name: isc-fhiraas
+  name: isc-fhiraas
 ---
 apiVersion: v1
 kind: ConfigMap

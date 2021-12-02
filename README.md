@@ -1,6 +1,6 @@
 # fhiraas-microservice-kubernetes
 
-A Quick way to invite the InterSystems FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://www.nginx.com) proxy ninja maneuvers to get the job done.
+A Quick way to invite the InterSystems FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://nginx.org/en/) proxy ninja maneuvers to get the job done.
 
 ## Prerequisites
 
@@ -9,6 +9,8 @@ You'll need a couple of things if you want to deploy this in the manner it was p
 > 🔥 Environment
 > 
 > For this demonstration we are parked directly onto a Kubernetes Master Node tainted to put in work.
+
+IMG(PARKED SHELL)
 
 ## FHIR up the FHIR Accelerator Service
 
@@ -32,15 +34,18 @@ cd fhir-microservice-kubernetes
 
 - [ ] [Create a Namespace](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L1-6), this gives us a blast radius to play in for now.
 - [ ] [Create a ConfigMap](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L7-29), this is actually the reverse proxy madness implemented in the nginx.conf.
+
+>  ✏ WE GOTTA EDIT SOMETHING HERE
+> 
+> Remember the key and endpoint we generated from the FHIR Accelerator Service?.  We need to update them [here, in the deployment](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L24-26)
+
 - [ ] [Create a Deployment](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L30-60), here is the containers themselves, with a Three's Company starting point for a replica set.
+- [ ] [Create a Service](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L61-75), Expose it!, this is a simple NodePort service that binds a port on the Node to access the FHIR Accelerator Service.  It exposes 30036 to the node, and forwards to the deployment pod on 52773.
 
 ```
-git clone https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes.git
-cd fhir-microservice-kubernetes
+cd fhir-microservice-kubernetes # should already be here, but just to be sure.
+kubectl apply -f k8s/
 ```
-
-## Expose it!
-- [ ] [Create a Service](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L61-75), this is a simple NodePort service that binds a port on the Node to access the FHIR Accelerator Service.  It exposes 30036 to the node, and forwards to the deployment pod on 52773.
 
 ## Throw some FHIR at it!
 Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects in the event your laptop takes off.
@@ -55,13 +60,20 @@ We're on a single node and exposing the service to a node port so not sure this 
 ```
 kubectl scale deployments/isc-fhiraas-deployment --replicas=30 -n isc-fhiraas
 ```
-# Throw some more FHIR at it!
+IMG(watcher)
+IMG(clownsuit)
+## Throw some more FHIR at it!
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://www.makeareadme.com/) for this template.
+Pump up the volume and increase the traffic, let's see if we get better timings for the exact same params, but scaled out.
 
 ```
 bash bin/fhirbench.sh
 ```
+
+## Clown Suit
+
+# Blame
+This stuff in the repo, Ron Sweeney (ron.sweeney@integrationrequired.com) of [Integration Required]:"https://www.integrationrequired.com".  These are the opinions of my employer.
 
 
 
