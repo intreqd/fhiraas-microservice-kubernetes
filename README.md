@@ -1,6 +1,6 @@
 # fhiraas-microservice-kubernetes
 
-A Quick way to invite the FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://www.nginx.com) proxy ninja maneuvers to get the job done.
+A Quick way to invite the InterSystems FHIR Accelerator Service to your Microservice party in a Kubernetes Cluster for immediate use.  The solution uses [Nginx](https://www.nginx.com) proxy ninja maneuvers to get the job done.
 
 ## Prerequisites
 
@@ -12,10 +12,16 @@ You'll need a couple of things if you want to deploy this in the manner it was p
 
 ## FHIR up the FHIR Accelerator Service
 
-- [ ] [Create a account in the InterSystems Cloud ](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Create a FHIR Accelerator Service Deployment](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- [ ] [Create a account in the InterSystems Cloud ](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) 
+- [ ] [Create a FHIR Accelerator Service Deployment](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) 
+- [ ] [Create an Api Key](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line)
+
+> 🖇 Record the Endpoint and API Key
+> 
+> This is all we need from the FHIR Accelerator, we will interact with the service in our own way inside the Kubernetes Cluster.
 
 ## Clone this Repo
+For the "Rest of the README", park yourself on a Tainted Kubernetes Master Node.  
 
 ```
 git clone https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes.git
@@ -37,14 +43,14 @@ cd fhir-microservice-kubernetes
 - [ ] [Create a Service](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/settings/integrations)
 
 ## Throw some FHIR at it!
-Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.
+Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects while running.
 
 ```
 bash bin/fhirbench.sh
 ```
 ## Scale It!
 
-We're on a single node and exposing the service to a node port, but go nuts and scale away anyway.
+We're on a single node and exposing the service to a node port so not sure this will increase our throughput, but go nuts and scale away anyway.  
 
 ```
 kubectl scale deployments/isc-fhiraas-deployment --replicas=30 -n isc-fhiraas
