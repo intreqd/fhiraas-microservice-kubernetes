@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: Namespace
+apiVersion: v1
+metadata:
+name: isc-fhiraas
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: isc-fhiraas-config
+data:
+  nginx.conf: |
+    daemon off; 
+    events {}
+    http {
+
+    server {
+      server_name localtwo;
+      listen 52773 default_server;
+      recursive_error_pages on;
+
+    location / {
+        add_header x-api-key 41JoHud7B52RIdEoX8P51aCxCad93nPM1UKeHLcL; 
+        proxy_set_header x-api-key 41JoHud7B52RIdEoX8P51aCxCad93nPM1UKeHLcL; 
+        proxy_pass https://fhir.3tj5n89rurex.static-test-account.isccloud.io;
+    }
+    }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isc-fhiraas-deployment
+  labels:
+    app: isc-fhiraas
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: isc-fhiraas 
+  template:
+    metadata:
+      labels:
+        app: isc-fhiraas
+    spec:
+      containers:
+      - name: isc-fhiraas-container
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 52773
+        volumeMounts:
+          - name: isc-fhiraas-config
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+        command: ["nginx"]
+      volumes:
+      - name: isc-fhiraas-config
+        configMap:
+          name: isc-fhiraas-config
+---
+apiVersion: v1
+kind: Service
+metadata:  
+  name: fhiraas-nodeport-service
+spec:
+  selector:    
+    app: isc-fhiraas
+  type: NodePort
+  ports:  
+  - name: http
+    port: 52773
+    targetPort: 52773
+    nodePort: 30036
+    protocol: TCP
