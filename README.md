@@ -58,10 +58,10 @@ kubectl apply -f k8s/
 
 Lets do a quick test and see if FHIR is successfully getting served up through the NodePort.
 
- - [✔] Node Port Socket Listening?
- - [✔] Conformance Statement Responding?
- - [✔] Query Patients?
- - [✔] Get Patient? 
+  [✔] Node Port Socket Listening?  
+  [✔] Conformance Statement Responding?  
+  [✔] Query Patients?  
+  [✔] Get Patient? 
 
 ![Test](assets/fhiraas_nodeport.gif?raw=true "Ron")
 
