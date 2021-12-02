@@ -30,9 +30,9 @@ cd fhir-microservice-kubernetes
 
 ## Deploy to Kubernetes Cluster
 
-- [ ] [Create a Namespace](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/settings/integrations)
-- [ ] [Create a ConfigMap](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/settings/integrations)
-- [ ] [Create a Deployment](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/settings/integrations)
+- [ ] [Create a Namespace](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L1-6), this gives us a blast radius to play in for now.
+- [ ] [Create a ConfigMap](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L7-29), this is actually the reverse proxy madness implemented in the nginx.conf.
+- [ ] [Create a Deployment](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L30-60), here is the containers themselves, with a Three's Company starting point for a replica set.
 
 ```
 git clone https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes.git
@@ -40,10 +40,10 @@ cd fhir-microservice-kubernetes
 ```
 
 ## Expose it!
-- [ ] [Create a Service](https://gitlab.com/-/experiment/new_project_readme_content:08628bec7a790d72f5f9d5aabd50d2f3?https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/settings/integrations)
+- [ ] [Create a Service](https://gitlab.com/isc_cloud/fhiraas-microservice-kubernetes/-/blob/main/k8s/fhiraas_k8s_deployment.yml#L61-75), this is a simple NodePort service that binds a port on the Node to access the FHIR Accelerator Service.  It exposes 30036 to the node, and forwards to the deployment pod on 52773.
 
 ## Throw some FHIR at it!
-Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects while running.
+Included in this repo is a hostile, rustic, shell script for throwing some random patients into the Patient resource with a few bells and no whistles.  I needs some environment variables or you can just edit the variables directly in the script.  When running this script, ensure proper cpu fan operation and move objects from laptop area to prevent shuffling of objects in the event your laptop takes off.
 
 ```
 bash bin/fhirbench.sh
