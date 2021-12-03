@@ -22,9 +22,9 @@ data:
       recursive_error_pages on;
 
     location / {
-        add_header x-api-key 41JoHud7B52RIdEoX8P51aCxCad93nPM1UKeHLcL; 
-        proxy_set_header x-api-key 41JoHud7B52RIdEoX8P51aCxCad93nPM1UKeHLcL; 
-        proxy_pass https://fhir.3tj5n89rurex.static-test-account.isccloud.io;
+        add_header x-api-key 12345eIeI0ChangeMe; 
+        proxy_set_header x-api-key 12345eIeI0ChangeMe; 
+        proxy_pass https://fhir.deploymentid.static-test-account.isccloud.io;
     }
     }
     }
